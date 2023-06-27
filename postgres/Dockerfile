@@ -1,1 +1,3 @@
 FROM postgres:alpine
+
+ENV POSTGRES_PASSWORD=D34AsfDef
