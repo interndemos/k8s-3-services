@@ -7,7 +7,7 @@ import psycopg2
 
 app = Flask(__name__)
 
-rds = redis.Redis(host=config('REDIS_HOST'), port=config('REDIS_PORT'), db=0)
+rds = redis.Redis(host=config('REDIS_HOST_VALUE'), port=config('REDIS_PORT_VALUE'), db=0)
 
 db_conn = psycopg2.connect(
     database=config('DATABASE_NAME'),
