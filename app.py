@@ -1,3 +1,4 @@
+import sys
 from datetime import datetime
 
 from flask import Flask
@@ -7,15 +8,30 @@ import psycopg2
 
 app = Flask(__name__)
 
-rds = redis.Redis(host=config('REDIS_HOST_VALUE'), port=config('REDIS_PORT_VALUE'), db=0)
+rds = None
 
-db_conn = psycopg2.connect(
-    database=config('DATABASE_NAME'),
-    user=config('DATABASE_USERNAME'),
-    password=config('DATABASE_PASSWORD'),
-    host=config('DATABASE_HOST'),
-    port=config('DATABASE_PORT'),
-)
+try:
+    rds = redis.Redis(host=config('REDIS_HOST_VALUE'), port=config('REDIS_PORT_VALUE'), db=0)
+    rds.ping()
+    print("Redis connection OK", file=sys.stderr)
+except Exception as e:
+    print(f"Redis connection failed: {e}", file=sys.stderr)
+    exit(1)
+
+db_conn = None
+
+try:
+    db_conn = psycopg2.connect(
+        database=config('DATABASE_NAME'),
+        user=config('DATABASE_USERNAME'),
+        password=config('DATABASE_PASSWORD'),
+        host=config('DATABASE_HOST'),
+        port=config('DATABASE_PORT'),
+    )
+    print("Database connection OK.", file=sys.stderr)
+except:
+    print("Database connection failed", file=sys.stderr)
+    exit(2)
 
 with db_conn.cursor() as cur:
     cur.execute(f"""DROP TABLE IF EXISTS checked_primes;""")

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prime-checker-postgres-deployment # deployment name
+  labels:
+    app: prime-checker-postgres-deploy-label # label for the deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prime-checker-postgres # label to select pods for this deployment
+  template:
+    metadata:
+      labels:
+        app: prime-checker-postgres # label for the pod
+    spec:
+      containers:
+        - name: postgres # container name
+          image: registry.digitalocean.com/teach-k8s/postgres-k8s-demo:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+      restartPolicy: Always

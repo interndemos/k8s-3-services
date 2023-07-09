@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prime-checker-webapp-deployment # deployment name
+  labels:
+    app: prime-checker-webapp-deploy-label # label for the deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prime-checker-web # label to select pods for this deployment
+  template:
+    metadata:
+      labels:
+        app: prime-checker-web # label for the pod
+    spec:
+      containers:
+        - name: webapp # container name
+          image: registry.digitalocean.com/teach-k8s/prime-checker-app:v4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
