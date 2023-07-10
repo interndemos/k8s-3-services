@@ -81,9 +81,9 @@ def check_prime(N:int):
                 )
                 db_conn.commit()
 
-            return "YES"
+            return "<p>YES</p><p><a href='/'>Home</a></p>"
     else:
-        return "NO"
+        return "<p>NO</p><p><a href='/'>Home</a></p>"
 
 
 if __name__ == '__main__':

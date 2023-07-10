@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: webapp # container name
-          image: registry.digitalocean.com/teach-k8s/prime-checker-app:v4
+          image: registry.digitalocean.com/teach-k8s/prime-checker-app:v1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
